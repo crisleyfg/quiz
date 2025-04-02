@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fórmula GLP - Quiz 5 Passos</title>
+  
+  <style>
+    /* Zerar margens e fontes básicas */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f7f7f7; /* Ajuste conforme desejar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .quiz-container {
+      background-color: #ffffff;
+      width: 100%;
+      max-width: 450px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Logo ou Título no topo (caso deseje) */
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .quiz-header img {
+      max-width: 150px;
+      margin-bottom: 10px;
+    }
+
+    .quiz-header h1 {
+      font-size: 1.4rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    /* Barra de Progresso */
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background: #28a745; /* Cor que avança na barra */
+      transition: width 0.3s ease-in-out;
+    }
+
+    /* Cada Passo */
+    .step {
+      display: none; /* Esconde por padrão */
+      flex-direction: column;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Animação simples ao entrar no step */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .step-active {
+      display: flex;
+    }
+
+    .step h2 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .step p {
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+      color: #666;
+    }
+
+    .step input,
+    .step select {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    /* Botões */
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      margin: 0 5px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .btn-prev {
+      background-color: #ccc;
+      color: #000;
+    }
+
+    .btn-next {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    /* Ocultar botão Voltar (Previous) no primeiro passo se quiser */
+    .hide {
+      display: none;
+    }
+
+    /* Mensagem final */
+    .final-message {
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .final-message strong {
+      color: #28a745;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <!-- Cabeçalho / Título -->
+    <div class="quiz-header">
+      <!-- Se houver um logo, você pode colocar assim:
+      <img src="logo.png" alt="Logo Fórmula" />
+      -->
+      <h1>Descubra a Fórmula Ideal</h1>
+    </div>
+
+    <!-- Barra de Progresso -->
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Formulário de Quiz -->
+    <form id="quiz-form">
+      <!-- Passo 1 -->
+      <div class="step step-active">
+        <h2>Qual é o seu principal objetivo?</h2>
+        <p>Ex: Perder peso, Ganhar mais disposição, etc.</p>
+        <input type="text" id="objetivo" placeholder="Digite seu objetivo" required />
+        
+        <div class="buttons">
+          <!-- Botão Voltar fica oculto no primeiro passo, se desejar -->
+          <button type="button" class="btn btn-prev hide">Voltar</button>
+          <button type="button" class="btn btn-next">Próximo</button>
+        </div>
+      </div>
+
+      <!-- Passo 2 -->
+      <div class="step">
+        <h2>Qual é a sua idade?</h2>
+        <input type="number" id="idade" placeholder="Digite sua idade" required />
+        
+        <div class="buttons">
+          <button type="button" class="btn btn-prev">Voltar</button>
+          <button type="button" class="btn btn-next">Próximo</button>
+        </div>
+      </div>
+
+      <!-- Passo 3 -->
+      <div class="step">
+        <h2>Qual é o seu peso aproximado?</h2>
+        <p>Informe em quilogramas (kg) ou libras (lbs), como preferir.</p>
+        <input type="text" id="peso" placeholder="Ex: 70kg ou 154lbs" required />
+        
+        <div class="buttons">
+          <button type="button" class="btn btn-prev">Voltar</button>
+          <button type="button" class="btn btn-next">Próximo</button>
+        </div>
+      </div>
+
+      <!-- Passo 4 -->
+      <div class="step">
+        <h2>Qual é a sua altura?</h2>
+        <p>Informe em centímetros (cm) ou pés/polegadas.</p>
+        <input type="text" id="altura" placeholder="Ex: 170 cm ou 5'7''" required />
+        
+        <div class="buttons">
+          <button type="button" class="btn btn-prev">Voltar</button>
+          <button type="button" class="btn btn-next">Próximo</button>
+        </div>
+      </div>
+
+      <!-- Passo 5 -->
+      <div class="step">
+        <h2>Qual parte do corpo deseja reduzir medidas?</h2>
+        <p>Ex: Abdômen, Pernas, Braços, etc.</p>
+        <input type="text" id="parteCorpo" placeholder="Ex: Abdômen" required />
+        
+        <div class="buttons">
+          <button type="button" class="btn btn-prev">Voltar</button>
+          <button type="submit" class="btn btn-next">Finalizar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const steps = Array.from(document.querySelectorAll('.step'));
+    const progressBar = document.getElementById('progress');
+    const form = document.getElementById('quiz-form');
+    
+    let currentStep = 0;
+
+    function updateStepDisplay() {
+      // Exibir a step atual e esconder as demais
+      steps.forEach((step, index) => {
+        step.classList.remove('step-active');
+        if (index === currentStep) step.classList.add('step-active');
+      });
+
+      // Atualizar barra de progresso
+      const progressPercent = (currentStep / (steps.length - 1)) * 100;
+      progressBar.style.width = progressPercent + '%';
+
+      // Botão "Voltar" só aparece a partir do 2º passo
+      const prevButtons = document.querySelectorAll('.btn-prev');
+      prevButtons.forEach(btn => {
+        if (currentStep === 0) {
+          btn.classList.add('hide');
+        } else {
+          btn.classList.remove('hide');
+        }
+      });
+    }
+
+    // Ao clicar em Próximo
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-next') && !e.target.type === 'submit') {
+        // Validar o input atual
+        const inputs = steps[currentStep].querySelectorAll('input, select');
+        for (let input of inputs) {
+          if (!input.checkValidity()) {
+            input.reportValidity();
+            return;
+          }
+        }
+
+        currentStep = Math.min(currentStep + 1, steps.length - 1);
+        updateStepDisplay();
+      }
+
+      if (e.target.classList.contains('btn-prev')) {
+        currentStep = Math.max(currentStep - 1, 0);
+        updateStepDisplay();
+      }
+    });
+
+    // Ao enviar (último passo)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Pegar valores finais
+      const objetivo = document.getElementById('objetivo').value;
+      const idade = document.getElementById('idade').value;
+      const peso = document.getElementById('peso').value;
+      const altura = document.getElementById('altura').value;
+      const parteCorpo = document.getElementById('parteCorpo').value;
+
+      // Exibir mensagem de finalização (ou enviar para outra página, etc.)
+      form.innerHTML = `
+        <div class="final-message">
+          <h2>Obrigado por responder!</h2>
+          <p><strong>Objetivo:</strong> ${objetivo}</p>
+          <p><strong>Idade:</strong> ${idade}</p>
+          <p><strong>Peso:</strong> ${peso}</p>
+          <p><strong>Altura:</strong> ${altura}</p>
+          <p><strong>Parte do corpo:</strong> ${parteCorpo}</p>
+          <p>Em breve entraremos em contato com orientações personalizadas!</p>
+        </div>
+      `;
+    });
+
+    // Inicializar exibição
+    updateStepDisplay();
+  </script>
+
+</body>
+</html>
